@@ -14,6 +14,11 @@ if [ ! -z "$HELIOS_PORT_kafka" ]; then
     ADVERTISED_PORT=`echo $HELIOS_PORT_kafka | cut -d':' -f 2`
 fi
 
+# Configure advertised host to use docker network ip
+if [ ! -z "$ADVERTISE_DOCKER_HOST" ]; then
+    ADVERTISED_HOST=$(ip route show | grep 'default via' | awk '{print $3}')
+fi
+
 # Set the external host and port
 if [ ! -z "$ADVERTISED_HOST" ]; then
     echo "advertised host: $ADVERTISED_HOST"
