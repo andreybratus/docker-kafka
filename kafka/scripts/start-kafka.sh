@@ -19,6 +19,11 @@ if [ ! -z "$ADVERTISE_DOCKER_HOST" ]; then
     ADVERTISED_HOST=$(ip route show | grep 'default via' | awk '{print $3}')
 fi
 
+# Configure to adverties container ip address
+if [ ! -z "$ADVERTISE_CONTAINER_IP" ]; then
+    ADVERTISED_HOST=$(ip -o -4 addr show | awk -F '[ /]+' '/global/ {print $4}')
+fi
+
 # Set the external host and port
 if [ ! -z "$ADVERTISED_HOST" ]; then
     echo "advertised host: $ADVERTISED_HOST"
