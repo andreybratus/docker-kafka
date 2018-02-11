@@ -4,7 +4,7 @@ FROM java:openjdk-8-jre
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV SCALA_VERSION 2.12
-ENV KAFKA_VERSION 0.11.0.0
+ENV KAFKA_VERSION 1.0.0
 ENV KAFKA_HOME /opt/kafka_"$SCALA_VERSION"-"$KAFKA_VERSION"
 
 # Install Kafka, Zookeeper and other needed things
@@ -23,5 +23,4 @@ ADD supervisor/kafka.conf supervisor/zookeeper.conf /etc/supervisor/conf.d/
 
 # 2181 is zookeeper, 9092 is kafka
 EXPOSE 2181 9092
-HEALTHCHECK --start-period=15s CMD nc -v -z localhost 2181 && nc -v -z localhost 9092
 CMD ["supervisord", "-n"]
